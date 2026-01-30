@@ -26,4 +26,5 @@ export const userService = {
             throw new Error("Erro ao buscar usuários");
         }
     },
+
 };

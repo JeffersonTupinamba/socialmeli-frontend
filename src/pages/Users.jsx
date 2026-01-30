@@ -1,6 +1,27 @@
 import { Link } from "react-router-dom";
+import { userService } from "../services/userService";
+import { useState, useEffect } from "react";
 
 function Users() {
+  const [users, setUsers] = useState([]); // Começa com uma lista vazia
+  const [loading, setLoading] = useState(true); // Para mostrar um "Carregando..."
+
+  useEffect(() => {
+    loadUsers();
+  }, []);
+
+  const loadUsers = async () => {
+    try {
+      setLoading(true); // Começa o carregamento
+      const data = await userService.getAll();
+      setUsers(data); //Guarda a resposta da API na variável users
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setLoading(false); // Termina o carregamento mesmo com erro
+    }
+  };
+
   const containerStyle = {
     display: "flex",
     justifyContent: "space-between",
@@ -30,8 +51,16 @@ function Users() {
         </Link>
       </div>
 
-      <p>Aqui vamos listar os usuários no futuro.</p>
-      {/* depois: tabela/lista de usuários */}
+      {loading ? (
+        <p>Carregando usuários...</p>
+      ) : (
+        <ul>
+          {users.map((user) => (
+            <li key={user.id}>{user.name}</li>
+          ))}
+        </ul>
+      )}
+      
     </div>
   );
 }
