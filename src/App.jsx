@@ -26,7 +26,7 @@ function App() {
 
       {/* 4. O roteador que troca o conteúdo das páginas */}
       <main style={{ padding: "20px" }}>
-        <AppRouter />
+        <AppRouter activeUserId={activeUserId} />
       </main>
     </div>
   );

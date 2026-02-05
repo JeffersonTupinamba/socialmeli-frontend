@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
 import { userService } from "../services/userService";
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 function Users() {
@@ -14,6 +14,7 @@ function Users() {
     try {
       setLoading(true); // Começa o carregamento
       const data = await userService.getAll();
+      debugger;
       setUsers(data); //Guarda a resposta da API na variável users
     } catch (error) {
       alert(error.message);
@@ -42,26 +43,46 @@ function Users() {
 
   return (
     <div>
-      <div style={containerStyle}>
-        <h2>Usuários</h2>
-
-        {/* Botão para criar usuário */}
-        <Link to="/users/create" style={buttonStyle}>
-          + Criar Usuário
-        </Link>
-      </div>
-
-      {loading ? (
-        <p>Carregando usuários...</p>
-      ) : (
-        <ul>
-          {users.map((user) => (
-            <li key={user.id}>{user.name}</li>
-          ))}
-        </ul>
-      )}
-      
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <h2>Lista de Usuários</h2>
+      <Link to="/users/create" className="btn-create" style={{ padding: '8px', backgroundColor: '#4CAF50', color: 'white', textDecoration: 'none', borderRadius: '4px' }}>
+        + Novo Usuário
+      </Link>
     </div>
+
+    {loading ? (
+      <p>Carregando usuários...</p>
+    ) : (
+      <table style={{ width: "100%", marginTop: "20px", borderCollapse: "collapse" }}>
+        <thead>
+          <tr style={{ borderBottom: "2px solid #ccc", textAlign: "left" }}>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.length > 0 ? (
+            users.map((user) => (
+              <tr key={user.id} style={{ borderBottom: "1px solid #eee" }}>
+                <td>{user.ID}</td>
+                <td>{user.Name}</td>
+                <td>{user.Email}</td>
+                <td>{user.Role}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="4" style={{ textAlign: "center", padding: "20px" }}>
+                Nenhum usuário encontrado.
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    )}
+  </div>
   );
 }
 
