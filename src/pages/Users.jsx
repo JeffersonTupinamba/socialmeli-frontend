@@ -1,5 +1,5 @@
-import { userService } from "../services/userService";
 import { Link } from "react-router-dom";
+import { userService } from "../services/userService";
 import { useState, useEffect } from "react";
 
 function Users() {
@@ -14,7 +14,6 @@ function Users() {
     try {
       setLoading(true); // Começa o carregamento
       const data = await userService.getAll();
-      debugger;
       setUsers(data); //Guarda a resposta da API na variável users
     } catch (error) {
       alert(error.message);
