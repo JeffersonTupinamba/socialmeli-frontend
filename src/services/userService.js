@@ -3,7 +3,7 @@ import axios from "axios";
 const api = axios.create({
     baseURL: "http://localhost:8080",
     headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
     },
 });
 export const userService = {
@@ -25,8 +25,18 @@ export const userService = {
             const response = await api.get("/users");
             return response.data;
         } catch (error) {
-            throw new Error("Erro ao buscar usuários");
+            const message = error.response?.data?.message || "Erro ao buscar usuários";
+            throw new Error(message);
         }
     },
 
+    getById: async (userId) => {
+        try {
+            const response = await api.get(`/users/${userId}`);
+            return response.data;
+        } catch (error) {
+            const message = error.response?.data?.message || "Erro ao buscar usuário";
+            throw new Error(message);
+        }
+    }
 };

@@ -23,7 +23,7 @@ function Navbar() {
 
   return (
     <nav style={navStyle}>
-      <span style={brandStyle}>SocialMeli</span>
+      <span style={brandStyle}>Social Meli</span>
 
       <Link to="/" style={linkStyle}>
         Home
