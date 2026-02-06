@@ -29,14 +29,14 @@ export const userService = {
             throw new Error(message);
         }
     },
-
+    // função para buscar/listar um usuário específico
     getById: async (userId) => {
         try {
-            const response = await api.get(`/users/${userId}`);
-            return response.data;
+            const response = await api.get(`/users/${userId}`); 
+            return response.data; 
         } catch (error) {
-            const message = error.response?.data?.message || "Erro ao buscar usuário";
-            throw new Error(message);
+            const message = error.response?.data?.message || "Erro ao buscar usuário"; 
+            throw new Error(message); 
         }
     }
 };

@@ -10,16 +10,22 @@ function UserSelector({ onUserChange }) {
     if (!userId) return;
     try {
       const user = await userService.getById(userId);
-      onUserChange(user.id);
-      alert(`Bem-vindo(a) ${user.name}!`);
+      onUserChange(user);
+      alert(`Bem-vindo(a) ${user.Name}!`);
     } catch (error) {
       alert("Erro ao buscar usuário");
     }
   }
+  // função para deslogar o usuário
+  const handleLogout = () => {
+    setUserId(""); // limpa o input
+    onUserChange(null); // desloga o usuário
+    alert("Usuário deslogado.");
+  }
 
   // 2. Renderiza o componente com o input e o botão
-  return (
-    <div style={{ padding: "10px", backgroundColor: "#f0f0f0", color: "#333", display: "flex", justifyContent: "flex-end"}}>
+  return ( 
+    <div style={{ padding: "20px 20px 10px 20px", backgroundColor: "#f0f0f0", color: "#333", display: "flex", justifyContent: "flex-end"}}>
       <label>ID do Usuário Ativo: </label>
       <input 
         type="number" 
@@ -29,6 +35,7 @@ function UserSelector({ onUserChange }) {
         placeholder="Digite um ID"
       />
       <button onClick={handleUpdate}>Selecionar</button>
+      <button onClick={handleLogout}>Sair</button>
     </div>
   );
 }
