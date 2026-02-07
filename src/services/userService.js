@@ -30,13 +30,23 @@ export const userService = {
         }
     },
     // função para buscar/listar um usuário específico
-    getById: async (userId) => {
+    getById: async (userID) => {
         try {
-            const response = await api.get(`/users/${userId}`); 
+            const response = await api.get(`/users/${userID}`); 
             return response.data; 
         } catch (error) {
             const message = error.response?.data?.message || "Erro ao buscar usuário"; 
             throw new Error(message); 
+        }
+    },
+    // função para seguir um usuário
+    follow: async (userID, sellerId) => {
+        try {
+            const response = await api.post(`/users/${userID}/follow/${sellerId}`);
+            return response.data;
+        } catch (error) {
+            const message = error.response?.data?.message || "Erro ao seguir usuário";
+            throw new Error(message);
         }
     }
 };

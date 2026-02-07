@@ -8,7 +8,7 @@ import UserCreate from "../pages/UserCreate";
 import UserDetail from "../pages/UserDetail";
 import UserEdit from "../pages/UserEdit";
 
-function AppRouter() {
+function AppRouter({ activeUserId }) {
   return (
     <Routes>
       {/* Rotas gerais */}
@@ -17,7 +17,7 @@ function AppRouter() {
       <Route path="/following" element={<Following />} />
 
       {/* Usuários - CRUD */}
-      <Route path="/users" element={<Users />} />              {/* lista */}
+      <Route path="/users" element={<Users activeUserId={activeUserId} />} />              {/* lista */}
       <Route path="/users/create" element={<UserCreate />} />  {/* criar */}
       <Route path="/users/:id" element={<UserDetail />} />     {/* detalhe */}
       <Route path="/users/:id/edit" element={<UserEdit />} />  {/* editar */}

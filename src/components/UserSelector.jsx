@@ -7,13 +7,13 @@ function UserSelector({ onUserChange }) {
 
   // função para atualizar o usuário ativo
   const handleUpdate = async () => {
-    if (!userId) return;
+    if (!userId) return; // se o input estiver vazio, não faz nada
     try {
-      const user = await userService.getById(userId);
-      onUserChange(user);
-      alert(`Bem-vindo(a) ${user.Name}!`);
-    } catch (error) {
-      alert("Erro ao buscar usuário");
+      const user = await userService.getById(userId); // busca o usuário pelo ID
+      onUserChange(user); 
+      alert(`Bem-vindo(a) ${user.Name}!`); 
+    } catch (error) { 
+      alert("Erro ao buscar usuário"); 
     }
   }
   // função para deslogar o usuário
