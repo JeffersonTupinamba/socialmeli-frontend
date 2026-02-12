@@ -2,14 +2,15 @@ import { Link } from "react-router-dom";
 import { userService } from "../services/userService";
 import { useState, useEffect } from "react";
 
-function Users() {
+//componente para listar os usuários
+function Users({ activeUserId }) {
   const [users, setUsers] = useState([]); // Começa com uma lista vazia
   const [loading, setLoading] = useState(true); // Para mostrar um "Carregando..."
 
   useEffect(() => {
     loadUsers();
   }, []);
-
+  //função para carregar os usuários
   const loadUsers = async () => {
     try {
       setLoading(true); // Começa o carregamento
@@ -19,6 +20,24 @@ function Users() {
       alert(error.message);
     } finally {
       setLoading(false); // Termina o carregamento mesmo com erro
+    }
+  };
+  
+  // função para seguir um usuário
+  const handleFollow = async (sellerId) => { 
+    if (!activeUserId) { // se o usuário ativo não for selecionado, mostra um alerta
+      alert("Não há usuário ativo selecionado.");
+      return;
+    }
+    if (activeUserId === sellerId) { // se o vendedor for o mesmo que o usuário ativo, mostra um alerta
+      alert("Você não pode seguir você mesmo.");
+      return;
+    }
+    try { 
+      await userService.follow(activeUserId, sellerId); // segue o vendedor
+      alert("Vendedor seguido com sucesso!"); 
+    } catch (error) {
+      alert(error.message);
     }
   };
 
@@ -59,16 +78,22 @@ function Users() {
             <th>Nome</th>
             <th>E-mail</th>
             <th>Role</th>
+            <th>Ações</th>
           </tr>
         </thead>
         <tbody>
           {users.length > 0 ? (
             users.map((user) => (
-              <tr key={user.id} style={{ borderBottom: "1px solid #eee" }}>
+              <tr key={user.ID} style={{ borderBottom: "1px solid #eee" }}>
                 <td>{user.ID}</td>
                 <td>{user.Name}</td>
                 <td>{user.Email}</td>
                 <td>{user.Role}</td>
+                <td>
+                  {user.Role === "seller" && (
+                    <button onClick={() => handleFollow(user.ID)}>Seguir</button>
+                  )}
+                </td>
               </tr>
             ))
           ) : (

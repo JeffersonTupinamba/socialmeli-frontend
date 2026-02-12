@@ -5,7 +5,7 @@ import UserSelector from "./components/UserSelector";
 
 function App() {
   // Este é o estado global do usuário ativo
-  const [activeUserId, setActiveUserId] = useState(null);
+  const [activeUser, setActiveUser] = useState(null);
 
   return (
     <div className="App">
@@ -13,20 +13,20 @@ function App() {
       <Navbar />
       
       {/* 2. O Seletor de Usuário logo abaixo da Navbar */}
-      <UserSelector onUserChange={(id) => setActiveUserId(id)} />
+      <UserSelector onUserChange={(user) => setActiveUser(user)} />
 
       {/* 3. Mostra qual usuário está logado no momento */}
-      <div style={{ padding: "10px", textAlign: "center", backgroundColor: "black" }}>
-        {activeUserId ? (
-          <p>Logado como usuário: <strong>{activeUserId}</strong></p>
+      <div style={{ padding: "10px 30px 10px 30px", textAlign: "right", backgroundColor: "#f0f0f0" }}>
+        {activeUser ? (
+          <p>Logado como usuário: <strong>{activeUser.Name}</strong> ({activeUser.Role})</p>
         ) : (
-          <p>Nenhum usuário selecionado</p>
+          <p>Nenhum usuário selecionado.</p>
         )}
       </div>
 
       {/* 4. O roteador que troca o conteúdo das páginas */}
       <main style={{ padding: "20px" }}>
-        <AppRouter activeUserId={activeUserId} />
+        <AppRouter activeUserId={activeUser?.ID} />
       </main>
     </div>
   );
