@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { userService } from "../services/userService";
 import { useState, useEffect } from "react";
 
+//componente para listar os usuários
 function Users({ activeUserId }) {
   const [users, setUsers] = useState([]); // Começa com uma lista vazia
   const [loading, setLoading] = useState(true); // Para mostrar um "Carregando..."
@@ -9,7 +10,7 @@ function Users({ activeUserId }) {
   useEffect(() => {
     loadUsers();
   }, []);
-
+  //função para carregar os usuários
   const loadUsers = async () => {
     try {
       setLoading(true); // Começa o carregamento
@@ -21,10 +22,11 @@ function Users({ activeUserId }) {
       setLoading(false); // Termina o carregamento mesmo com erro
     }
   };
+  
   // função para seguir um usuário
   const handleFollow = async (sellerId) => { 
     if (!activeUserId) { // se o usuário ativo não for selecionado, mostra um alerta
-      alert("Selecione um vendedor para seguir.");
+      alert("Não há usuário ativo selecionado.");
       return;
     }
     if (activeUserId === sellerId) { // se o vendedor for o mesmo que o usuário ativo, mostra um alerta
